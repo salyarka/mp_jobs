@@ -15,7 +15,8 @@ public class StopWords {
     public static void main(String[] args)
             throws IOException, ClassNotFoundException, InterruptedException{
         if (args.length != 3) {
-            System.out.println("Need 3 arguments (inputDir, outputDir, fileName)");
+            System.out.println(
+                    "Need 3 arguments (inputDir, outputDir, fileName)");
             System.exit(-1);
         }
 
@@ -31,7 +32,8 @@ public class StopWords {
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
 
-        DistributedCache.addCacheFile(new Path(args[2]).toUri(), job.getConfiguration());
+        DistributedCache.addCacheFile(
+                new Path(args[2]).toUri(), job.getConfiguration());
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
@@ -46,3 +48,4 @@ public class StopWords {
 
     }
 }
+

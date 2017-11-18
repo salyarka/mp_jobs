@@ -17,14 +17,14 @@ public class StopWordsMapper
     private Text outputKeyStop = new Text("stop");
     private Text outputKeyTotal = new Text("total");
     private IntWritable weight = new IntWritable(1);
-    private BufferedReader fis;
 
     public StopWordsMapper(){}
 
     @Override
     public void setup(Context context) throws IOException {
         try {
-            Path[] stopWordsFiles = DistributedCache.getLocalCacheFiles(context.getConfiguration());
+            Path[] stopWordsFiles = DistributedCache.getLocalCacheFiles(
+                    context.getConfiguration());
             if (stopWordsFiles != null && stopWordsFiles.length > 0) {
                 for (Path stopWordFile : stopWordsFiles) {
                     readStopWordFile(stopWordFile);
@@ -37,7 +37,8 @@ public class StopWordsMapper
 
     private void readStopWordFile(Path stopWordFile) {
         try {
-            fis = new BufferedReader(new FileReader(stopWordFile.toString()));
+            BufferedReader fis = new BufferedReader(new FileReader(
+                    stopWordFile.toString()));
             String stopWord = null;
             while ((stopWord = fis.readLine()) != null) {
                 String[] words = stopWord.split(",");
@@ -56,6 +57,8 @@ public class StopWordsMapper
         String[] words = line.split("\\W*\\s+\\W*");
 
         for(String word: words ){
+            System.out.println(line);
+            System.out.println(word);
             if (stopWords.contains(word)) {
                 con.write(outputKeyStop, weight);
             }
@@ -63,3 +66,4 @@ public class StopWordsMapper
         }
     }
 }
+
