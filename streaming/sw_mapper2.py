@@ -3,14 +3,16 @@ import sys
 from optparse import OptionParser
 
 
-sys.setdefaultencoding('utf-8')
-
-parser = OptionParser()
+usage = 'Usage: -f <filename>'
+parser = OptionParser(usage=usage)
 parser.add_option(
     '-f', '--file', dest='filename',
     help='file with stop words', metavar='FILE'
 )
 options, args = parser.parse_args()
+if options.filename is None:
+    parser.print_help()
+    sys.exit(1)
 
 with open(options['filename']) as f:
     stop_words_set = set(word.strip() for word in f)
