@@ -14,7 +14,7 @@ if options.filename is None:
     parser.print_help()
     sys.exit(1)
 
-with open(options['filename']) as f:
+with open(options.filename) as f:
     stop_words_set = set(word.strip() for word in f)
 
 total = 0
